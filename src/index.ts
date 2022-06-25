@@ -1,13 +1,6 @@
-import express, { Express } from 'express';
-import dotenv from 'dotenv';
-import ping from './routes/ping'
+import { config } from './config';
+import app from './routes';
 
-dotenv.config();
-
-const app: Express = express();
-const port = process.env.PORT;
-app.use("/ping", ping);
-
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(config.PORT, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${config.PORT}`);
 });

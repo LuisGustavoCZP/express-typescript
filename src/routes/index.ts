@@ -1,3 +1,8 @@
+import express, { Router, Express } from 'express';
 import ping from "./ping";
 
-export default {ping};
+const app: Express = express();
+
+app.use("/ping", ping);
+
+export default app;
