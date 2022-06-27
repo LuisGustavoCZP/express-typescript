@@ -5,13 +5,13 @@ class ResponseWriter
 {
     public error (res: Response, error : Error): void
     {
-        const [ statusCode, messages ] = error.message.replace(/[|]$/, "").split(": ");
+        const [ statusCode, messages ] = error.message.split(": ");
             
         if(Number(statusCode))
         {
             res.status(Number(statusCode)).json({
                 data:{},
-                messages: messages.split("|")
+                messages: messages.replace(/[|]$/, "").split("|")
             } as APIResponse);
         } 
         else

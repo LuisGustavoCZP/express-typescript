@@ -1,13 +1,12 @@
 class NameValidator
 {
-    public name: string;
+    public data: string;
     public errors: string;
-    static regex = /^(\S+)@((?:(?:(?!-)[a-zA-Z0-9]{1,62}[a-zA-Z0-9])\.)+[a-zA-Z0-9]{2, 12})$/;
 
     public constructor (name: string)
     {
         this.errors = "";
-        this.name = this.validate(name);
+        this.data = this.validate(name);
     }
 
     private validate (name: string) : string

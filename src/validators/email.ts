@@ -1,13 +1,13 @@
 class EmailValidator
 {
-    public email: string;
+    public data: string;
     public errors: string;
-    static regex = /^(\S+)@((?:(?:(?!-)[a-zA-Z0-9]{1,62}[a-zA-Z0-9])\.)+[a-zA-Z0-9]{2, 12})$/;
+    static regex = /^(\S+)@((?:(?:(?!-)[a-zA-Z0-9-]{1,62}[a-zA-Z0-9])\.)+[a-zA-Z0-9]{2,12})$/;
 
     public constructor (email: string)
     {
         this.errors = "";
-        this.email = this.validate(email);
+        this.data = this.validate(email);
     }
 
     private validate (email: string) : string

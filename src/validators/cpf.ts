@@ -1,7 +1,8 @@
-class DateValidator
+class CPFValidator
 {
     public data: string;
     public errors: string;
+    static regex = /^([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2})$/;
 
     public constructor (date: string)
     {
@@ -13,13 +14,13 @@ class DateValidator
     {
         if(!date || date.length == 0)
         {
-            this.errors = this.errors += "date:date required|";
+            this.errors = this.errors += "cpf:cpf required|";
             return "";
         }
 
-        if(!new Date(date).getTime())
+        if(!CPFValidator.regex.test(date))
         {
-            this.errors = this.errors += "date:invalid date|";
+            this.errors = this.errors += "cpf:invalid cpf format|";
             return "";
         }
 
@@ -27,4 +28,4 @@ class DateValidator
     }
 }
 
-export { DateValidator };
+export { CPFValidator };
