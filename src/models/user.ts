@@ -6,4 +6,4 @@ interface User {
     cpf: string
 }
 
-export { User }
+export default User;

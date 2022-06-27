@@ -1,4 +1,4 @@
-class CPFValidator
+class UserIDValidator
 {
     public data: string;
     public errors: string;
@@ -18,7 +18,7 @@ class CPFValidator
             return "";
         }
 
-        if(!CPFValidator.regex.test(date))
+        if(!UserIDValidator.regex.test(date))
         {
             this.errors = this.errors += "cpf:invalid cpf format|";
             return "";
@@ -28,4 +28,4 @@ class CPFValidator
     }
 }
 
-export { CPFValidator };
+export default UserIDValidator;

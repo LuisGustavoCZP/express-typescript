@@ -4,7 +4,7 @@ import EmailValidator from "./strings/email";
 import NameValidator from "./strings/name";
 import CPFValidator from "./strings/cpf";
 
-class UserDataValidator 
+class AccountDataValidator 
 {
     public data: Partial<User>;
     public errors: string;
@@ -35,4 +35,4 @@ class UserDataValidator
     }
 }
 
-export default UserDataValidator;
+export default AccountDataValidator;

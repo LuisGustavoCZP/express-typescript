@@ -1,17 +1,17 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
 import { APIResponse, User } from "../../models";
-import { UserDataValidator } from "../../validators/user-data";
+import AccountDataValidator from "../../validators/account-data";
 
 class CreateAccountService 
 {
-    private userDataValidator = UserDataValidator;
+    private dataValidator = AccountDataValidator;
 
     public async execute (user: User) : Promise<APIResponse>
     {
         try 
         {
-            const validUserData = new this.userDataValidator(user);
+            const validUserData = new this.dataValidator(user);
 
             if(validUserData.errors)
             {

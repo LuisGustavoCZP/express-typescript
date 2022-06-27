@@ -1,3 +1,6 @@
-export { APIResponse } from "./response.js"
-export { User } from "./user.js"
-export { Account } from "./account.js"
+import APIResponse from "./response.js";
+import User from "./user.js";
+import Account from "./account.js";
+
+export {APIResponse, User, Account};
+

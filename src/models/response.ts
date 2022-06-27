@@ -3,4 +3,4 @@ interface APIResponse {
     messages: string[]
 }
 
-export { APIResponse };
+export default APIResponse;

@@ -8,4 +8,4 @@ interface Account {
     balance: number
 }
 
-export { Account }
+export default Account;

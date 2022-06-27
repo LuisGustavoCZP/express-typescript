@@ -1,18 +1,18 @@
 import { v4 } from "uuid";
 import { APIResponse, User } from "../../models";
 import { ExceptionTreatment } from "../../utils";
-import { UserDataValidator } from "../../validators/user-data";
+import UserDataValidator from "../../validators/user-data";
 import UsersTable from "../../client/postgres/user";
 
 class CreateUserService 
 {
-    private userDataValidator = UserDataValidator;
+    private dataValidator = UserDataValidator;
 
     public async execute (user: User): Promise<APIResponse>
     {
         try 
         {
-            const validUserData = new this.userDataValidator(user);
+            const validUserData = new this.dataValidator(user);
 
             if(validUserData.errors)
             {
