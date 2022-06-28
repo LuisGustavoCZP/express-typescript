@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ResponseWriter } from "../../utils/response-writer";
-import CreateAccountService from "../../services/account/create-account";
+import { CreateAccountService } from "../../services";
 
 class CreateAccount
 {
@@ -12,9 +12,9 @@ class CreateAccount
             const response = await CreateAccountService.execute(req.body);
             new ResponseWriter().success(res, 201, response)
         }
-        catch(e : any) 
+        catch(e)
         {
-            new ResponseWriter().error(res, e);
+            new ResponseWriter().error(res, e as Error);
         }
     }
 }

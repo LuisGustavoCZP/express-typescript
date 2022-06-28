@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import CreateAccount from '../controller/account/create-account';
+import { AccountController } from '../controller';
 
 const router : Router = express.Router();
 
-router.route("/").post(CreateAccount.handle)
+router.route("/create").post(AccountController.CreateAccount.handle)
 
 export default router;

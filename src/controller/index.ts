@@ -1,6 +1,7 @@
 import ping from "./ping";
 import ping2 from "./ping2";
-import CreateUser from "./user/create-user";
+import UserController from "./user";
+import AccountController from "./account";
 
-export { CreateUser };
+export { UserController, AccountController };
 export default {ping, ping2};

@@ -1,5 +1,7 @@
 import { Pool } from "pg";
 import config from "../../config";
+import AccountsTable from "./account";
+import UsersTable from "./user";
 
 class PostgresDB
 {
@@ -18,4 +20,5 @@ class PostgresDB
     }
 }
 
+export {AccountsTable, UsersTable};
 export default new PostgresDB();

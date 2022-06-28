@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { APIResponse, User } from "../../models";
 import { ExceptionTreatment } from "../../utils";
 import UserDataValidator from "../../validators/user-data";
-import UsersTable from "../../client/postgres/user";
+import UsersTable from "../../clients/postgres/user";
 
 class CreateUserService 
 {
@@ -18,9 +18,18 @@ class CreateUserService
             {
                 throw new Error(`400: ${validUserData.errors}`)
             }
+            
+            const selectedUser = await UsersTable.select({cpf:validUserData.data.cpf});
+            if(selectedUser && selectedUser.length > 0)
+            {
+                //console.log("Achou ", selectedUser);
+                return {
+                    data: selectedUser[0],
+                    messages: []
+                } as APIResponse;
+            }
 
             validUserData.data.id = v4();
-
             const insertedUser = await UsersTable.insert(validUserData.data as User);
 
             if (insertedUser)
@@ -38,6 +47,7 @@ class CreateUserService
         }
         catch (error)
         {
+            
             throw new ExceptionTreatment(
                 error as Error,
                 500,

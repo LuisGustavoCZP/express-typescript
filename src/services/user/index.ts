@@ -1,2 +1,3 @@
 import CreateUserService from "./create-user";
-export { CreateUserService };
+import UserSearchService from "./user-search";
+export { CreateUserService, UserSearchService };

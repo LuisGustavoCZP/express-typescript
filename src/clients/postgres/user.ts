@@ -3,9 +3,9 @@ import { User } from "../../models";
 
 class UsersTable 
 {
-    private insertUserQuery = `
-    INSERT INTO users (id, name, email, birthdate, cpf, created_at) 
-    VALUES ($1, $2, $3, $4, $5, now ()) RETURNING id`;
+    private insertUserQuery = `INSERT INTO users (id, name, email, birthdate, cpf, created_at) VALUES ($1, $2, $3, $4, $5, now ()) RETURNING id`;
+    
+    private selectUserQuery = `SELECT * FROM users WHERE`;
 
     public async insert (user: User): Promise<boolean>
     {
@@ -29,7 +29,28 @@ class UsersTable
             //console.log("Deu erro", e);
             throw new Error("503: service temporarily unavailable");
         }
-    } 
+    }
+
+    public async select (filter: Partial<User>): Promise<User[]>
+    {
+        try 
+        {
+            const select_query = `${this.selectUserQuery} ${Object.keys(filter).reduce((q, key) => 
+            {
+                return q + `${key} = '${(filter as any)[key]}' ${q != ''? '&' : ''}`;
+            }, '')}`;
+            
+            const result = await Postgres.pool.query(select_query);
+
+            if(result.rows && result.rows.length !== 0) return result.rows;
+
+            return [];
+        }
+        catch(e)
+        {
+            throw new Error("503: service temporarily unavailable");
+        }
+    }
 }
 
 export default new UsersTable();
