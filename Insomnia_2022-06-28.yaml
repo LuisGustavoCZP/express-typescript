@@ -1,0 +1,132 @@
+_type: export
+__export_format: 4
+__export_date: 2022-06-28T05:41:09.868Z
+__export_source: insomnia.desktop.app:v2022.3.0
+resources:
+  - _id: req_f95cf9b727c14102ad2876dc80cf0c78
+    parentId: fld_460a8ede814d4bb592bd708dd18eee80
+    modified: 1656387703671
+    created: 1656384100862
+    url: "{{ _.host }}{{ _.route }}/create"
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "name": "Luis Gustavo",
+            "email": "luisgustavoczp@gmail.com",
+            "birthdate": "1993-01-31",
+            "cpf": "082.839.449-08"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b1bbd7e8af8a42c895dba34fe6eb24f8
+    authentication: {}
+    metaSortKey: -1655450866782.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_460a8ede814d4bb592bd708dd18eee80
+    parentId: wrk_aac8425b0288460e92911d4ec4444e49
+    modified: 1656384155048
+    created: 1656384086807
+    name: Account
+    description: ""
+    environment:
+      route: /account
+    environmentPropertyOrder:
+      "&":
+        - route
+    metaSortKey: -1656349837511
+    _type: request_group
+  - _id: wrk_aac8425b0288460e92911d4ec4444e49
+    parentId: null
+    modified: 1656349827694
+    created: 1656349827694
+    name: express-typescript.yaml
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: req_85b1e1aa712d4e5dba8ca79d636af4a6
+    parentId: fld_434d806aded84fcebd14f953b5014bb9
+    modified: 1656384234497
+    created: 1656349844953
+    url: "{{ _.host }}{{ _.route }}/create"
+    name: Create
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "name": "Luis Gustavo",
+            "email": "luisgustavoczp@gmail.com",
+            "birthdate": "1993-01-13",
+            "cpf": "082.839.449-08"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b1bbd7e8af8a42c895dba34fe6eb24f8
+    authentication: {}
+    metaSortKey: -1656349837411
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_434d806aded84fcebd14f953b5014bb9
+    parentId: wrk_aac8425b0288460e92911d4ec4444e49
+    modified: 1656384139162
+    created: 1656349837461
+    name: User
+    description: ""
+    environment:
+      route: /user
+    environmentPropertyOrder:
+      "&":
+        - route
+    metaSortKey: -1656349837461
+    _type: request_group
+  - _id: env_bec0f9bfa57a6960b79d003b041c60b6281cbca2
+    parentId: wrk_aac8425b0288460e92911d4ec4444e49
+    modified: 1656349965458
+    created: 1656349827706
+    name: Base Environment
+    data:
+      host: http://localhost:8000
+    dataPropertyOrder:
+      "&":
+        - host
+    color: null
+    isPrivate: false
+    metaSortKey: 1656349827706
+    _type: environment
+  - _id: jar_bec0f9bfa57a6960b79d003b041c60b6281cbca2
+    parentId: wrk_aac8425b0288460e92911d4ec4444e49
+    modified: 1656349827710
+    created: 1656349827710
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_773b150ffcc340e5ba35faf55dadc05b
+    parentId: wrk_aac8425b0288460e92911d4ec4444e49
+    modified: 1656349827695
+    created: 1656349827695
+    fileName: express-typescript.yaml
+    contents: ""
+    contentType: yaml
+    _type: api_spec
