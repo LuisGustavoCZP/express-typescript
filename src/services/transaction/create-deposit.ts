@@ -42,7 +42,7 @@ class CreateDepositService
             await TransactionTable.insert(taxTransaction);
 
             return {
-                data: newDestAcc,
+                data: [depositTransaction, taxTransaction],
                 messages: []
             } as APIResponse;
         }

@@ -68,7 +68,7 @@ class CreateTransferenceService
             await TransactionTable.insert(destTransaction);
 
             return {
-                data: newOriginAcc,
+                data: [taxTransaction, originTransaction, destTransaction],
                 messages: []
             } as APIResponse;
         }

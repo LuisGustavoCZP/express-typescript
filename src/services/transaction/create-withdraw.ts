@@ -48,7 +48,7 @@ class CreateWithdrawService
             await TransactionTable.insert(depositTransaction);
 
             return {
-                data: newDestAcc,
+                data: [taxTransaction, depositTransaction],
                 messages: []
             } as APIResponse;
         }
