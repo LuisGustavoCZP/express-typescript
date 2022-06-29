@@ -66,7 +66,6 @@ class TransactionsTable
         }
         catch(e)
         {
-            console.log(e);
             throw new Error("503: service temporarily unavailable");
         }
     }

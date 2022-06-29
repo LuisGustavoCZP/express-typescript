@@ -31,7 +31,7 @@ class AccountsTable
         }
         catch(e)
         {
-            console.log("Acc", e);
+            //console.log("Acc", e);
             throw new Error("503: service temporarily unavailable");
         }
     }
@@ -59,7 +59,7 @@ class AccountsTable
         }
         catch(e)
         {
-            console.log("Test", e);
+            //console.log("Test", e);
             throw new Error("503: service temporarily unavailable");
         }
     }

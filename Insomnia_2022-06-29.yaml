@@ -1,11 +1,11 @@
 _type: export
 __export_format: 4
-__export_date: 2022-06-29T20:18:02.234Z
+__export_date: 2022-06-29T20:45:43.971Z
 __export_source: insomnia.desktop.app:v2022.4.2
 resources:
   - _id: req_f95cf9b727c14102ad2876dc80cf0c78
     parentId: fld_460a8ede814d4bb592bd708dd18eee80
-    modified: 1656533382752
+    modified: 1656534666280
     created: 1656384100862
     url: "{{ _.host }}{{ _.route }}/create"
     name: Create Karol
@@ -16,7 +16,7 @@ resources:
       text: |-
         {
             "name": "Karoline",
-            "email": "luisgustavoczp@gmail.com",
+            "email": "karoline@gmail.com",
             "birthdate": "1994-08-13",
             "cpf": "068.005.849-05"
         }
@@ -26,7 +26,7 @@ resources:
         value: application/json
         id: pair_b1bbd7e8af8a42c895dba34fe6eb24f8
     authentication: {}
-    metaSortKey: -1655450866782.5
+    metaSortKey: -1655001381518.25
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -58,7 +58,7 @@ resources:
     _type: workspace
   - _id: req_4fe066d36898422d88392334810bd8ef
     parentId: fld_460a8ede814d4bb592bd708dd18eee80
-    modified: 1656533384931
+    modified: 1656534243930
     created: 1656528175365
     url: "{{ _.host }}{{ _.route }}/create"
     name: Create Luis
@@ -70,7 +70,7 @@ resources:
         {
             "name": "Luis Gustavo",
             "email": "luisgustavoczp@gmail.com",
-            "birthdate": "1994-08-13",
+            "birthdate": "1993-01-13",
             "cpf": "082.839.549-06"
         }
     parameters: []
@@ -90,7 +90,7 @@ resources:
     _type: request
   - _id: req_2447dcc4cf1c4e84811746618680348b
     parentId: fld_5395dd753f994866b56e99a30dfb306e
-    modified: 1656533444334
+    modified: 1656535087781
     created: 1656530614163
     url: "{{ _.host }}/extract"
     name: Extract Karol
@@ -145,7 +145,7 @@ resources:
     _type: request_group
   - _id: req_5a38e267fb9c43eab8a8210488dac901
     parentId: fld_5395dd753f994866b56e99a30dfb306e
-    modified: 1656533439919
+    modified: 1656535088855
     created: 1656530564676
     url: "{{ _.host }}/extract"
     name: Extract Luis
@@ -180,10 +180,10 @@ resources:
     _type: request
   - _id: req_bb024c62e7d34591ac5947964a04078f
     parentId: fld_f3665bcf44ae4f319a1d4dedc839d362
-    modified: 1656533404124
+    modified: 1656535090302
     created: 1656531646472
     url: "{{ _.host }}/deposit"
-    name: Deposit Luis
+    name: Deposit Luis $100
     description: ""
     method: POST
     body:
@@ -224,12 +224,48 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1656529524105
     _type: request_group
+  - _id: req_6e0d1046449d4965bdf51ac2c0c09cff
+    parentId: fld_f3665bcf44ae4f319a1d4dedc839d362
+    modified: 1656535091054
+    created: 1656535028144
+    url: "{{ _.host }}/deposit"
+    name: Deposit Luis $3
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"destination":{
+        		"agency": "10",
+        		"agency_identifier": "0",
+        		"account": "20",
+        		"account_identifier": "1",
+        		"cpf":"082.839.549-06"
+        	},
+        	"quanty":3.00
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_97251ec51e03464499049f97ed4cbba5
+    authentication: {}
+    metaSortKey: -1656528485121
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
   - _id: req_b51df58a13c54a8ebb61ea9ebd3decfa
     parentId: fld_f3665bcf44ae4f319a1d4dedc839d362
-    modified: 1656533182553
+    modified: 1656535091976
     created: 1656531646477
     url: "{{ _.host }}/deposit"
-    name: Deposit Karol
+    name: Deposit Karol $103
     description: ""
     method: POST
     body:
@@ -243,7 +279,7 @@ resources:
         		"account_identifier": "0",
         		"cpf":"068.005.849-05"
         	},
-        	"quanty":101.00
+        	"quanty":103.00
         }
     parameters: []
     headers:
@@ -262,7 +298,7 @@ resources:
     _type: request
   - _id: req_1c9752311c364d41ba1821e37815bec6
     parentId: fld_50bd101e0ef64b70886f52d7a7dddba4
-    modified: 1656533430615
+    modified: 1656535094152
     created: 1656526699497
     url: "{{ _.host }}/transference"
     name: Transference L->K
@@ -315,7 +351,7 @@ resources:
     _type: request_group
   - _id: req_c09fdc74b0cc4565bf5d8d4e191ef6d6
     parentId: fld_50bd101e0ef64b70886f52d7a7dddba4
-    modified: 1656533141582
+    modified: 1656535096855
     created: 1656517964989
     url: "{{ _.host }}/transference"
     name: Transference K->L
@@ -358,7 +394,7 @@ resources:
     _type: request
   - _id: req_abae36666efd4f97b6ca42458d931558
     parentId: fld_1566a7ce111a4a86a6ef5adca39c9363
-    modified: 1656533456738
+    modified: 1656535097828
     created: 1656531928703
     url: "{{ _.host }}/withdraw"
     name: Withdraw Karol
@@ -404,7 +440,7 @@ resources:
     _type: request_group
   - _id: req_331ae2f48fff4cbf990f24fe73341489
     parentId: fld_1566a7ce111a4a86a6ef5adca39c9363
-    modified: 1656532292419
+    modified: 1656535098559
     created: 1656531928709
     url: "{{ _.host }}/withdraw"
     name: Withdraw Luis
@@ -440,7 +476,7 @@ resources:
     _type: request
   - _id: env_bec0f9bfa57a6960b79d003b041c60b6281cbca2
     parentId: wrk_aac8425b0288460e92911d4ec4444e49
-    modified: 1656349965458
+    modified: 1656534834787
     created: 1656349827706
     name: Base Environment
     data:
