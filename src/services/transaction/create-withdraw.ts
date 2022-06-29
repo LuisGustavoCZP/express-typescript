@@ -58,7 +58,7 @@ class CreateWithdrawService
             throw new ExceptionTreatment(
                 error as Error,
                 500,
-                "an error occurred while transfering from account to another on database"
+                "an error occurred while withdrawing from account on database"
             );
         }
     }

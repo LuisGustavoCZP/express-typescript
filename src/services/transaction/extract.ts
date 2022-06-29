@@ -37,7 +37,7 @@ class CreateExtractService
             throw new ExceptionTreatment(
                 error as Error,
                 500,
-                "an error occurred while getting extract on database"
+                "an error occurred while listing extract on database"
             );
         }
     }
