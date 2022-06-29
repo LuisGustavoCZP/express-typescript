@@ -36,14 +36,14 @@ class AccountsTable
         }
     }
 
-    public async update (id: string, filter: Partial<Account>): Promise<Account[]>
+    public async update (id: string, atributes: Partial<Account>): Promise<Account[]>
     {
         try 
         {
             const values: any[] = [];
-            const keys = Object.keys(filter).reduce((q, key, i) => 
+            const keys = Object.keys(atributes).reduce((q, key, i) => 
             {
-                values.push((filter as any)[key]);
+                values.push((atributes as any)[key]);
                 return q + `${q != ''? ', ' : ''}"${key}" = $${i+1}`;
             }, '');
 
