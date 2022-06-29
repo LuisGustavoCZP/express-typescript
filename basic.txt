@@ -1,0 +1,4 @@
+criação de conta bancaria - verifica dados, se existir cria cliente e conta
+deposito - cria tarifa, atualiza o saldo
+saque/tranferencia - validar saldo da conta adicionado da tarifa, validar existencia de contas e se o cliente tem cpf
+extrato - transação logo seguida da tarifa

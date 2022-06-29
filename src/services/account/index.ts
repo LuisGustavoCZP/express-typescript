@@ -1,3 +1,3 @@
 import CreateAccountService from "./create-account";
-
-export { CreateAccountService };
+import SelectAccountService from "./select-account";
+export { CreateAccountService, SelectAccountService };

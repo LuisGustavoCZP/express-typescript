@@ -1,24 +1,5 @@
-import { Pool } from "pg";
-import config from "../../config";
 import AccountsTable from "./account";
 import UsersTable from "./user";
+import TransactionTable from "./transaction";
 
-class PostgresDB
-{
-    private _pool: Pool;
-
-    public constructor ()
-    {
-        this._pool = new Pool({
-            connectionString: config.POSTGRES
-        });
-    }
-
-    public get pool ()
-    {
-        return this._pool;
-    }
-}
-
-export {AccountsTable, UsersTable};
-export default new PostgresDB();
+export { AccountsTable, UsersTable, TransactionTable };

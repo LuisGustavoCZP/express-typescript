@@ -1,17 +1,21 @@
-import Postgres from ".";
+import Postgres from "./database";
 import { Account } from "../../models";
 
 class AccountsTable 
 {
-    private insertUserQuery = `
+    private insertQuery = `
     INSERT INTO accounts (id, owner, agency, agency_identifier, account, account_identifier, balance, created_at) 
     VALUES ($1, $2, $3, $4, $5, $6, $7, now ()) RETURNING id`;
+
+    private updateQuery = `UPDATE accounts SET`;
+
+    private selectQuery = `SELECT * FROM accounts WHERE`;
 
     public async insert (account: Account): Promise<boolean>
     {
         try 
         {
-            const result = await Postgres.pool.query(this.insertUserQuery, [ 
+            const result = await Postgres.pool.query(this.insertQuery, [ 
                 account.id,
                 account.owner,
                 account.agency,
@@ -28,6 +32,58 @@ class AccountsTable
         catch(e)
         {
             console.log("Acc", e);
+            throw new Error("503: service temporarily unavailable");
+        }
+    }
+
+    public async update (id: string, filter: Partial<Account>): Promise<Account[]>
+    {
+        try 
+        {
+            const values: any[] = [];
+            const keys = Object.keys(filter).reduce((q, key, i) => 
+            {
+                values.push((filter as any)[key]);
+                return q + `${q != ''? ', ' : ''}"${key}" = $${i+1}`;
+            }, '');
+
+            const select_query = `${this.updateQuery} updated_at=now(), ${keys} WHERE id = '${id}' RETURNING id`;
+
+            //console.log(select_query);
+            
+            const result = await Postgres.pool.query(select_query, values);
+
+            if(result.rows && result.rows.length !== 0) return result.rows;
+
+            return [];
+        }
+        catch(e)
+        {
+            console.log("Test", e);
+            throw new Error("503: service temporarily unavailable");
+        }
+    }
+
+    public async select (filter: Partial<Account>): Promise<Account[]>
+    {
+        try 
+        {
+            const select_query = `${this.selectQuery} ${Object.keys(filter).reduce((q, key) => 
+            {
+                return q + `${q != ''? ' AND ' : ''}${key} = '${(filter as any)[key]}'`;
+            }, '')}`;
+
+            //console.log(select_query);
+            
+            const result = await Postgres.pool.query(select_query);
+
+            if(result.rows && result.rows.length !== 0) return result.rows;
+
+            return [];
+        }
+        catch(e)
+        {
+            //console.log(e);
             throw new Error("503: service temporarily unavailable");
         }
     }

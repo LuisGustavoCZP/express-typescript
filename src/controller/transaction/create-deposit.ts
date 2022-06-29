@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import { ResponseWriter } from "../../utils/response-writer";
-import { CreateAccountService } from "../../services";
+import { CreateDepositService } from "../../services";
 
-class CreateAccount
+class CreateDeposit
 { 
     public async handle (req: Request, res: Response) 
     {
         try 
         {
-            const response = await CreateAccountService.execute(req.body);
+            const {destination, quanty} = req.body;
+            //console.log("Passou por aqui!");
+            console.log(destination);
+            const response = await CreateDepositService.execute(destination, quanty);
             new ResponseWriter().success(res, 201, response)
         }
         catch(e)
@@ -18,4 +21,4 @@ class CreateAccount
     }
 }
 
-export default new CreateAccount();
+export default new CreateDeposit();

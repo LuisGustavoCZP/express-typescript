@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { ResponseWriter } from "../../utils/response-writer";
-import { CreateAccountService } from "../../services";
+import { CreateExtractService } from "../../services";
 
-class CreateAccount
+class CreateExtract
 { 
     public async handle (req: Request, res: Response) 
     {
         try 
         {
-            const response = await CreateAccountService.execute(req.body);
+            const {account} = req.body;
+            //console.log("Passou por aqui!");
+            const response = await CreateExtractService.execute(account);
             new ResponseWriter().success(res, 201, response)
         }
         catch(e)
@@ -18,4 +20,4 @@ class CreateAccount
     }
 }
 
-export default new CreateAccount();
+export default new CreateExtract();

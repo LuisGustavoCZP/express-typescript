@@ -1,4 +1,4 @@
-import Postgres from ".";
+import Postgres from "./database";
 import { User } from "../../models";
 
 class UsersTable 
@@ -37,7 +37,7 @@ class UsersTable
         {
             const select_query = `${this.selectUserQuery} ${Object.keys(filter).reduce((q, key) => 
             {
-                return q + `${key} = '${(filter as any)[key]}' ${q != ''? '&' : ''}`;
+                return q + `${q != ''? ' AND ' : ''}${key} = '${(filter as any)[key]}'`;
             }, '')}`;
             
             const result = await Postgres.pool.query(select_query);
@@ -48,6 +48,7 @@ class UsersTable
         }
         catch(e)
         {
+            console.log(e);
             throw new Error("503: service temporarily unavailable");
         }
     }

@@ -19,10 +19,10 @@ class CreateAccountService
             const account = {
                 id: v4(),
                 owner: resp.data.id,
-                agency: ac.slice(0, -1),
-                agency_identifier: ac.slice(-1),
-                account: ag.slice(0, -1),
-                account_identifier: ag.slice(-1),
+                agency: ag.slice(0, -1),
+                agency_identifier: ag.slice(-1),
+                account: ac.slice(0, -1),
+                account_identifier: ac.slice(-1),
                 balance: 0
             };
 

@@ -1,6 +1,8 @@
-import APIResponse from "./response.js";
-import User from "./user.js";
-import Account from "./account.js";
+import APIResponse from "./response";
+import User from "./user";
+import Account from "./account";
+import Transaction from "./transaction";
+import TransactionAccount from "./transaction-account";
 
-export {APIResponse, User, Account};
+export {APIResponse, User, Account, Transaction, TransactionAccount};
 
