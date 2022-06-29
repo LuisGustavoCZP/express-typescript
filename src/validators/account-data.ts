@@ -1,34 +1,34 @@
-import { User } from "../models";
-import DateValidator from "./strings/date";
-import EmailValidator from "./strings/email";
-import NameValidator from "./strings/name";
-import CPFValidator from "./strings/cpf";
+import { TransactionAccount } from "../models";
+import AgencyValidator from "./strings/agency";
+import AgencyIValidator from "./strings/agency-identifier";
+import AccountValidator from "./strings/account";
+import AccountIValidator from "./strings/account-identifier";
 
 class AccountDataValidator 
 {
-    public data: Partial<User>;
+    public data: Partial<TransactionAccount>;
     public errors: string;
 
-    public constructor (user: User)
+    public constructor (account: TransactionAccount)
     {
         this.errors = "";
-        this.data = this.validate(user);
+        this.data = this.validate(account);
     }
 
-    public validate (user: User) : Partial<User>
+    public validate (user: TransactionAccount) : Partial<TransactionAccount>
     {
-        const validEmail = new EmailValidator(user.email);
-        const validName = new NameValidator(user.name);
-        const validBirthdate = new DateValidator(user.birthdate);
-        const validCPF = new CPFValidator(user.cpf);
+        const validAgency = new AgencyValidator(user.agency);
+        const validAgencyI = new AgencyIValidator(user.agency_identifier);
+        const validAccount = new AccountValidator(user.account);
+        const validAccountI = new AccountIValidator(user.account_identifier);
 
-        this.errors = this.errors.concat(`${validEmail.errors}${validName.errors}${validBirthdate.errors}${validCPF.errors}`)
+        this.errors = this.errors.concat(`${validAgency.errors}${validAgencyI.errors}${validAccount.errors}${validAccountI.errors}`)
     
-        const userData: Partial<User> = {
-            email:validEmail.data,
-            name:validName.data,
-            birthdate:validBirthdate.data,
-            cpf:validCPF.data
+        const userData: Partial<TransactionAccount> = {
+            agency:validAgency.data,
+            agency_identifier:validAgencyI.data,
+            account:validAccount.data,
+            account_identifier:validAccountI.data
         }
 
         return userData;

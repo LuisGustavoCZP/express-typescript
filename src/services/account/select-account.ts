@@ -1,14 +1,24 @@
 import { ExceptionTreatment } from "../../utils";
 import { Account, APIResponse, TransactionAccount } from "../../models";
 import { AccountsTable, UsersTable } from "../../clients/postgres";
+import AccountDataValidator from "../../validators/account-data";
 
 class SelectAccountService 
 {
+    private dataValidator = AccountDataValidator;
+
     public async execute (account : TransactionAccount) : Promise<APIResponse>
     {
         try 
         {
             //console.log("Passou por aqui!");
+            const validAccountData = new this.dataValidator(account);
+
+            if(validAccountData.errors)
+            {
+                //throw new Error(`400: ${validAccountData.errors}`)
+            }
+
             const selectedAcc = await AccountsTable.select({agency:account.agency, agency_identifier:account.agency_identifier, account:account.account, account_identifier:account.account_identifier});
             
             if (selectedAcc)

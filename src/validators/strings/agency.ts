@@ -4,7 +4,7 @@ class AgencyValidator extends RegexValidator
 {
     protected override get regex() : RegExp 
     {
-        return /^([0-9]{4})$/;
+        return /^([0-9]{1-4})$/;
     }
 
     protected override get type() : string 
