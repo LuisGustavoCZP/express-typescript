@@ -1,5 +1,5 @@
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, TransactionAccount } from "../../models";
+import { APIResponse, Transaction, TransactionAccount } from "../../models";
 import { TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -12,16 +12,17 @@ class CreateExtractService
             const acc = await SelectAccountService.execute(account);
 
             if(acc.messages.length != 0) {
-                return {
-                    data: {},
-                    messages: [ "account do not exist" ]
-                } as APIResponse;
+                throw new Error(`400: account do not exist`);
             }
 
             console.log("Transação de", acc.data.id);
             
-            const resp = await TransactionTable.select({account:acc.data.id});
-            console.log(resp);
+            const resp = await TransactionTable.select({account:acc.data.id}) as Partial<Transaction>[];
+            
+            resp.forEach(element => {
+                delete element["account"];
+            });
+            //console.log(resp);
 
             return {
                 data: {

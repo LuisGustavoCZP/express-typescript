@@ -16,10 +16,17 @@ class SelectAccountService
 
             if(validAccountData.errors)
             {
-                //throw new Error(`400: ${validAccountData.errors}`)
+                throw new Error(`400: ${validAccountData.errors}`)
             }
 
-            const selectedAcc = await AccountsTable.select({agency:account.agency, agency_identifier:account.agency_identifier, account:account.account, account_identifier:account.account_identifier});
+            const validAccount = {
+                agency:validAccountData.data.agency,
+                agency_identifier:validAccountData.data.agency_identifier,
+                account:validAccountData.data.account,
+                account_identifier:validAccountData.data.account_identifier
+            }
+
+            const selectedAcc = await AccountsTable.select(validAccount);
             
             if (selectedAcc)
             {
@@ -30,7 +37,7 @@ class SelectAccountService
                     {
                         const selectedUser = await UsersTable.select({id:acc.owner});
 
-                        if(selectedUser[0].cpf == account.cpf)
+                        if(selectedUser[0].cpf == validAccountData.data.cpf)
                         {
                             return {
                                 data: acc,
@@ -40,10 +47,7 @@ class SelectAccountService
                     }
                 }
 
-                return {
-                    data: {},
-                    messages: [ "the account is not founded" ]
-                } as APIResponse;
+                throw new Error(`400: the account is not founded`);
             }
 
             return {
@@ -53,7 +57,7 @@ class SelectAccountService
         }
         catch (error)
         {
-            console.log("Acc selection error", error);
+            //console.log("Acc selection error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

@@ -47,7 +47,6 @@ class CreateUserService
         }
         catch (error)
         {
-            
             throw new ExceptionTreatment(
                 error as Error,
                 500,

@@ -26,10 +26,6 @@ class CreateAccountService
                 balance: 0
             };
 
-            //account.agency = `${"0".repeat(6-account.agency.length)}${account.agency}`;
-            //account.account = `${"0".repeat(8-account.account.length)}${account.account}`;
-    
-            //console.log("AC", ag, ac, account);
             const insertedAcc = await AccountsTable.insert(account as Account);
 
             if (insertedAcc)

@@ -14,19 +14,13 @@ class CreateWithdrawService
         {
             const originAcc = await SelectAccountService.execute(origin);
             if(originAcc.messages.length != 0) {
-                return {
-                    data: {},
-                    messages: [ "origin account do not exist" ]
-                } as APIResponse;
+                throw new Error(`400: origin account do not exist`);
             }
 
             const total = quanty + (this.tax);
             if(originAcc.data.balance < total)
             {
-                return {
-                    data: {},
-                    messages: [ "origin account has insuficient founds" ]
-                } as APIResponse;
+                throw new Error(`400: origin account has insuficient founds`);
             }
 
             const newDestAcc = await AccountsTable.update(originAcc.data.id, {balance:originAcc.data.balance-(total)});
@@ -54,7 +48,7 @@ class CreateWithdrawService
         }
         catch (error)
         {
-            console.log("User error", error);
+            //console.log("User error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

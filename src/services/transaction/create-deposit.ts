@@ -14,11 +14,9 @@ class CreateDepositService
         {
             console.log(destination);
             const destinationAcc = await SelectAccountService.execute(destination);
-            if(destinationAcc.messages.length != 0) {
-                return {
-                    data: {},
-                    messages: [ "destination account do not exist" ]
-                } as APIResponse;
+            if(destinationAcc.messages.length != 0) 
+            {
+                throw new Error(`400: destination account do not exist`);
             }
 
             const totalTax = quanty * (this.tax);
@@ -48,7 +46,7 @@ class CreateDepositService
         }
         catch (error)
         {
-            console.log("User error", error);
+            //console.log("User error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

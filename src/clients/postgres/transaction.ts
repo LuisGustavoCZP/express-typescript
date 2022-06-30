@@ -41,8 +41,17 @@ class TransactionsTable
             
             const result = await Postgres.pool.query(select_query);
 
-            if(result.rows && result.rows.length !== 0) return result.rows;
+            
 
+            if(result.rows && result.rows.length !== 0) 
+            {
+                result.rows.forEach(element => {
+                    delete element["created_by"];
+                    delete element["reversed_by"];
+                    delete element["reversed_at"];
+                });
+                return result.rows;
+            }
             return [];
         }
         catch(e)
@@ -60,7 +69,15 @@ class TransactionsTable
             
             const result = await Postgres.pool.query(select_query);
 
-            if(result.rows && result.rows.length !== 0) return result.rows;
+            if(result.rows && result.rows.length !== 0) 
+            {
+                result.rows.forEach(element => {
+                    delete element["created_by"];
+                    delete element["reversed_by"];
+                    delete element["reversed_at"];
+                });
+                return result.rows;
+            }
 
             return [];
         }
