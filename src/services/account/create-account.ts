@@ -11,7 +11,7 @@ class CreateAccountService
         try 
         {
             const resp = await CreateUserService.execute(user);
-            console.log(resp)
+            //console.log(resp)
 
             const ac = await AccountsTable.nextAccount();
             const ag = await AccountsTable.nextAgency();

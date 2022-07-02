@@ -26,11 +26,13 @@ class AccountsTable
         {
             const acc = await Postgres.sequenceGet('ac_serial');
             
-            if(acc === '999999999')
+            if(acc == '999999999')
             {
                 await Postgres.sequenceSet('ac_serial', 200);
                 await Postgres.sequenceNext('ag_serial');
-            } else {
+            } 
+            else 
+            {
                 Postgres.sequenceNext('ac_serial');
             }
             //console.log("AccNum", acc)

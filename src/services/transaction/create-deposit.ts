@@ -14,10 +14,6 @@ class CreateDepositService
         {
             console.log(destination);
             const destinationAcc = await SelectAccountService.execute(destination);
-            if(destinationAcc.messages.length != 0) 
-            {
-                throw new Error(`404: destination account do not exist`);
-            }
 
             const q = Number(quanty);
             const totalTax = q * (this.tax);

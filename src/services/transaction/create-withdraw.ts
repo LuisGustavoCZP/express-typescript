@@ -13,15 +13,12 @@ class CreateWithdrawService
         try 
         {
             const originAcc = await SelectAccountService.execute(origin);
-            if(originAcc.messages.length != 0) {
-                throw new Error(`404: origin account do not exist`);
-            }
 
             const q = Number(quanty);
             const total = q + (this.tax);
             if(originAcc.data.balance < total)
             {
-                throw new Error(`412: origin account has insuficient founds`);
+                throw new Error(`412: account has insuficient founds`);
             }
 
             const newDestAcc = await AccountsTable.update(originAcc.data.id, {balance:originAcc.data.balance-(total)});

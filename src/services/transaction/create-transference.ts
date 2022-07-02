@@ -13,23 +13,13 @@ class CreateTransferenceService
         try 
         {
             const originAcc = await SelectAccountService.execute(origin);
-
-            if(originAcc.messages.length != 0) 
-            {
-                throw new Error(`404: origin account do not exist`);
-            }
-
             const destinationAcc = await SelectAccountService.execute(destination);
-            if(destinationAcc.messages.length != 0) 
-            {
-                throw new Error(`404: destination account do not exist`);
-            }
 
             const q = Number(quanty);
             const total = q + this.tax;
             if(originAcc.data.balance < total)
             {
-                throw new Error(`412: origin account has insuficient founds`);
+                throw new Error(`412: account has insuficient founds`);
             }
 
             console.log("Transação de", originAcc.data.id, destinationAcc.data.id, originAcc.data.balance);

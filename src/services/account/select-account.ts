@@ -30,7 +30,7 @@ class SelectAccountService
             
             if (selectedAcc)
             {
-                
+                //console.log(selectedAcc, validAccount);
                 if(selectedAcc.length > 0)
                 {
                     for(const acc of selectedAcc)
@@ -45,15 +45,13 @@ class SelectAccountService
                             } as APIResponse;
                         }
                     }
+
+                    throw new Error(`401: this CPF is not allowed`);
                 }
 
-                throw new Error(`401: this CPF is not allowed`);
             }
 
-            return {
-                data: {},
-                messages: [ "an error occurred while selecting account" ]
-            } as APIResponse;
+            throw new Error(`404: account was not found`);
         }
         catch (error)
         {

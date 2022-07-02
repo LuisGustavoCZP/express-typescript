@@ -117,7 +117,7 @@ class PostgresDB
                 {
                     for(const key in element)
                     {
-                        if(!element[key]) delete element[key]; 
+                        if(element[key] == null) delete element[key]; 
                     }    
                 });
                 return result.rows;
@@ -172,7 +172,7 @@ class PostgresDB
         }
         catch(e)
         {
-            //console.log("Sequence Next", e);
+            console.log("Sequence Next", e);
             return false;
             //throw new Error("503: service temporarily unavailable");
         }
@@ -187,7 +187,7 @@ class PostgresDB
         }
         catch(e)
         {
-            //console.log("Sequence Set", e);
+            console.log("Sequence Set", e);
             return false;
         }
     }
@@ -196,9 +196,13 @@ class PostgresDB
     {
         try 
         {
-            const result = await this.pool.query(`SELECT last_value FROM ${sequence}`);
+            const result = await this.pool.query(`SELECT * FROM ${sequence}`);
+            //console.log(result)
+
             if(!result.rows || result.rows.length === 0) return "0";
-            const ag = result.rows[0].last_value;
+            const seq = result.rows[0];
+            const ag = seq.last_value;
+            if(!seq.is_called) await this.sequenceNext(sequence);
             //console.log(ag)
             return `${ag}`;
         }
