@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Transaction, TransactionAccount } from "../../models";
+import { APIResponse, Transaction, Fee, TransactionAccount } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -14,35 +14,37 @@ class CreateWithdrawService
         {
             const originAcc = await SelectAccountService.execute(origin);
             if(originAcc.messages.length != 0) {
-                throw new Error(`400: origin account do not exist`);
+                throw new Error(`404: origin account do not exist`);
             }
 
-            const total = quanty + (this.tax);
+            const q = Number(quanty);
+            const total = q + (this.tax);
             if(originAcc.data.balance < total)
             {
-                throw new Error(`400: origin account has insuficient founds`);
+                throw new Error(`412: origin account has insuficient founds`);
             }
 
             const newDestAcc = await AccountsTable.update(originAcc.data.id, {balance:originAcc.data.balance-(total)});
 
-            const taxTransaction : Transaction = {
-                id:v4(),
-                account:originAcc.data.id,
-                type:"tax",
-                value:-this.tax
-            };
-            await TransactionTable.insert(taxTransaction);
-
-            const depositTransaction : Transaction = {
+            const withdrawTransaction : Transaction = {
                 id:v4(),
                 account:originAcc.data.id,
                 type:"withdraw",
-                value:-quanty
+                value:-q
             };
-            await TransactionTable.insert(depositTransaction);
+            const taxTransaction : Fee = {
+                id:v4(),
+                origin:withdrawTransaction.id,
+                account:originAcc.data.id,
+                type:"fee",
+                value:-this.tax
+            };
+            
+            await TransactionTable.insert(withdrawTransaction);
+            await TransactionTable.insert(taxTransaction);
 
             return {
-                data: [taxTransaction, depositTransaction],
+                data: [taxTransaction, withdrawTransaction],
                 messages: []
             } as APIResponse;
         }

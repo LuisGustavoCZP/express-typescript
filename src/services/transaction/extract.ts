@@ -12,10 +12,10 @@ class CreateExtractService
             const acc = await SelectAccountService.execute(account);
 
             if(acc.messages.length != 0) {
-                throw new Error(`400: account do not exist`);
+                throw new Error(`404: account do not exist`);
             }
 
-            console.log("Transação de", acc.data.id);
+            //console.log("Extrato de", acc.data.id);
             
             const resp = await TransactionTable.select({account:acc.data.id}) as Partial<Transaction>[];
             

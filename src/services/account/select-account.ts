@@ -47,7 +47,7 @@ class SelectAccountService
                     }
                 }
 
-                throw new Error(`400: the account is not founded`);
+                throw new Error(`401: this CPF is not allowed`);
             }
 
             return {

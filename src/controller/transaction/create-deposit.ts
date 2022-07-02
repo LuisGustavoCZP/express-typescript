@@ -12,7 +12,7 @@ class CreateDeposit
             //console.log("Passou por aqui!");
             console.log(destination);
             const response = await CreateDepositService.execute(destination, quanty);
-            new ResponseWriter().success(res, 201, response)
+            new ResponseWriter().success(res, 202, response)
         }
         catch(e)
         {

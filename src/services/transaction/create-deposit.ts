@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Transaction, TransactionAccount } from "../../models";
+import { APIResponse, Fee, Transaction, TransactionAccount } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -16,27 +16,29 @@ class CreateDepositService
             const destinationAcc = await SelectAccountService.execute(destination);
             if(destinationAcc.messages.length != 0) 
             {
-                throw new Error(`400: destination account do not exist`);
+                throw new Error(`404: destination account do not exist`);
             }
 
-            const totalTax = quanty * (this.tax);
+            const q = Number(quanty);
+            const totalTax = q * (this.tax);
 
-            const newDestAcc = await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+(quanty - totalTax)});
+            const newDestAcc = await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+(q - totalTax)});
 
             const depositTransaction : Transaction = {
                 id:v4(),
                 account:destinationAcc.data.id,
                 type:"deposit",
-                value:quanty
+                value:q
             };
-            await TransactionTable.insert(depositTransaction);
-
-            const taxTransaction : Transaction = {
+            const taxTransaction : Fee = {
                 id:v4(),
+                origin:depositTransaction.id,
                 account:destinationAcc.data.id,
-                type:"tax",
+                type:"fee",
                 value:-totalTax
             };
+
+            await TransactionTable.insert(depositTransaction);
             await TransactionTable.insert(taxTransaction);
 
             return {

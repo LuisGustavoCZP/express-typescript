@@ -11,7 +11,7 @@ class CreateExtract
             const {account} = req.body;
             //console.log("Passou por aqui!");
             const response = await CreateExtractService.execute(account);
-            new ResponseWriter().success(res, 201, response)
+            new ResponseWriter().success(res, 200, response)
         }
         catch(e)
         {

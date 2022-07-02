@@ -11,7 +11,7 @@ class CreateWithdraw
             const {origin, quanty} = req.body;
             //console.log("Passou por aqui!");
             const response = await CreateWithdrawService.execute(origin, quanty);
-            new ResponseWriter().success(res, 201, response)
+            new ResponseWriter().success(res, 202, response)
         }
         catch(e)
         {

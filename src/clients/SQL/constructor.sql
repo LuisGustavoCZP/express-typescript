@@ -40,15 +40,14 @@ CREATE TABLE public.accounts (
 
 CREATE TABLE public.transactions (
 	"id" varchar(36) NOT NULL,
-	"account" varchar(36),
+	"account" varchar(36) NOT NULL,
+	"origin" varchar(36),
 	"type" varchar(50) NOT NULL,
 	"value" FLOAT NOT NULL,
 	"created_by" varchar(36),
 	"created_at" TIMESTAMP NOT NULL,
-	"updated_by" varchar(36),
-	"updated_at" TIMESTAMP,
-	"deleted_by" varchar(36),
-	"deleted_at" TIMESTAMP,
+	"reversed_by" varchar(36),
+	"reversed_at" TIMESTAMP,
 	CONSTRAINT "transactions_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -61,7 +60,7 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_fk0" FOREIGN KEY ("owner") REFER
 
 
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_fk0" FOREIGN KEY ("account") REFERENCES "accounts"("id");
-
+ALTER TABLE "transactions" ADD CONSTRAINT "transactions_fk1" FOREIGN KEY ("origin") REFERENCES "transactions"("id");
 
 
 

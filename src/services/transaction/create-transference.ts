@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Transaction, TransactionAccount } from "../../models";
+import { APIResponse, Fee, Transaction, TransactionAccount } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -16,47 +16,49 @@ class CreateTransferenceService
 
             if(originAcc.messages.length != 0) 
             {
-                throw new Error(`400: origin account do not exist`);
+                throw new Error(`404: origin account do not exist`);
             }
 
             const destinationAcc = await SelectAccountService.execute(destination);
             if(destinationAcc.messages.length != 0) 
             {
-                throw new Error(`400: destination account do not exist`);
+                throw new Error(`404: destination account do not exist`);
             }
 
-            const total = quanty + this.tax;
+            const q = Number(quanty);
+            const total = q + this.tax;
             if(originAcc.data.balance < total)
             {
-                throw new Error(`400: origin account has insuficient founds`);
+                throw new Error(`412: origin account has insuficient founds`);
             }
 
             console.log("Transação de", originAcc.data.id, destinationAcc.data.id, originAcc.data.balance);
 
             const newOriginAcc = await AccountsTable.update(originAcc.data.id, {balance:originAcc.data.balance-total});
-            await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+quanty});
-
-            const taxTransaction : Transaction = {
-                id:v4(),
-                account:originAcc.data.id,
-                type:"tax",
-                value:-this.tax
-            };
-            await TransactionTable.insert(taxTransaction);
+            await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+q});
 
             const originTransaction : Transaction = {
                 id:v4(),
                 account:originAcc.data.id,
                 type:"transference",
-                value:-quanty
+                value:-q
             };
+            const taxTransaction : Fee = {
+                id:v4(),
+                origin:originTransaction.id,
+                account:originAcc.data.id,
+                type:"fee",
+                value:-this.tax
+            };
+            
             await TransactionTable.insert(originTransaction);
+            await TransactionTable.insert(taxTransaction);
 
             const destTransaction : Transaction = {
                 id:v4(),
                 account:destinationAcc.data.id,
                 type:"transference",
-                value:quanty
+                value:q
             };
             await TransactionTable.insert(destTransaction);
 

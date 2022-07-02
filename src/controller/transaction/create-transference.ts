@@ -11,7 +11,7 @@ class CreateTransference
             const {origin, destination, quanty} = req.body;
             //console.log("Passou por aqui!");
             const response = await CreateTransferenceService.execute(origin, destination, quanty);
-            new ResponseWriter().success(res, 201, response)
+            new ResponseWriter().success(res, 202, response)
         }
         catch(e)
         {
