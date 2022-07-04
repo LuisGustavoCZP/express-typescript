@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Fee, Transaction, TransactionAccount } from "../../models";
+import { APIResponse, Fee, Transaction, TransactionAccount, TransactionType } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -30,14 +30,14 @@ class CreateTransferenceService
             const originTransaction : Transaction = {
                 id:v4(),
                 account:originAcc.data.id,
-                type:"transference",
+                type:TransactionType.Transference,
                 value:-q
             };
             const taxTransaction : Fee = {
                 id:v4(),
                 origin:originTransaction.id,
                 account:originAcc.data.id,
-                type:"fee",
+                type:TransactionType.Fee,
                 value:-this.tax
             };
             
@@ -47,7 +47,7 @@ class CreateTransferenceService
             const destTransaction : Transaction = {
                 id:v4(),
                 account:destinationAcc.data.id,
-                type:"transference",
+                type:TransactionType.Transference,
                 value:q
             };
             await TransactionTable.insert(destTransaction);

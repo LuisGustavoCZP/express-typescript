@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Transaction, Fee, TransactionAccount } from "../../models";
+import { APIResponse, Transaction, Fee, TransactionAccount, TransactionType } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -26,14 +26,14 @@ class CreateWithdrawService
             const withdrawTransaction : Transaction = {
                 id:v4(),
                 account:originAcc.data.id,
-                type:"withdraw",
+                type: TransactionType.Withdraw,
                 value:-q
             };
             const taxTransaction : Fee = {
                 id:v4(),
                 origin:withdrawTransaction.id,
                 account:originAcc.data.id,
-                type:"fee",
+                type: TransactionType.Fee,
                 value:-this.tax
             };
             

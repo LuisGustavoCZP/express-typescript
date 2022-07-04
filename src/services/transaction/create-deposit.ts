@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
-import { APIResponse, Fee, Transaction, TransactionAccount } from "../../models";
+import { APIResponse, Fee, Transaction, TransactionAccount, TransactionType } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
 import { SelectAccountService } from "../account";
 
@@ -23,14 +23,14 @@ class CreateDepositService
             const depositTransaction : Transaction = {
                 id:v4(),
                 account:destinationAcc.data.id,
-                type:"deposit",
+                type:TransactionType.Deposit,
                 value:q
             };
             const taxTransaction : Fee = {
                 id:v4(),
                 origin:depositTransaction.id,
                 account:destinationAcc.data.id,
-                type:"fee",
+                type:TransactionType.Fee,
                 value:-totalTax
             };
 
