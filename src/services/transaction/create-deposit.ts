@@ -8,7 +8,7 @@ class CreateDepositService
 {
     private tax = .01;
 
-    public async execute (destination: TransactionAccount, quanty: number) : Promise<APIResponse<Transaction[]>>
+    public async execute (destination: TransactionAccount, quanty: number) : Promise<APIResponse>
     {
         try 
         {

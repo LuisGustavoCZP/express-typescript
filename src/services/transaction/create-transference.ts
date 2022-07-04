@@ -8,7 +8,7 @@ class CreateTransferenceService
 {
     private tax = 1.00;
 
-    public async execute (origin: TransactionAccount, password: string, destination: TransactionAccount, quanty: number) : Promise<APIResponse<Transaction[]>>
+    public async execute (origin: TransactionAccount, password: string, destination: TransactionAccount, quanty: number) : Promise<APIResponse>
     {
         try 
         {

@@ -8,7 +8,7 @@ class CreateWithdrawService
 {
     private tax = 4;
 
-    public async execute (origin: TransactionAccount, password: string, quanty: number) : Promise<APIResponse<Transaction[]>>
+    public async execute (origin: TransactionAccount, password: string, quanty: number) : Promise<APIResponse>
     {
         try 
         {
