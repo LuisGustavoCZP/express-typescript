@@ -15,4 +15,4 @@ class ExceptionTreatment
     }
 }
 
-export { ExceptionTreatment };
+export default ExceptionTreatment;

@@ -29,4 +29,4 @@ class ResponseWriter
     }
 }
 
-export {ResponseWriter};
+export default ResponseWriter;

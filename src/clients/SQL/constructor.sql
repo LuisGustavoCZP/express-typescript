@@ -24,6 +24,7 @@ CREATE TABLE public.accounts (
 	"agency_identifier" varchar(1) NOT NULL,
 	"account" varchar(8) NOT NULL,
 	"account_identifier" varchar(1) NOT NULL,
+	"password" varchar(64) NOT NULL,
 	"balance" FLOAT NOT NULL,
 	"created_by" varchar(36),
 	"created_at" TIMESTAMP NOT NULL,

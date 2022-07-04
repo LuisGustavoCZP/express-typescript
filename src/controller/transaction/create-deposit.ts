@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ResponseWriter } from "../../utils/response-writer";
+import { ResponseWriter } from "../../utils";
 import { CreateDepositService } from "../../services";
 
 class CreateDeposit

@@ -8,14 +8,16 @@ class CreateDepositService
 {
     private tax = .01;
 
-    public async execute (destination: TransactionAccount, quanty: number) : Promise<APIResponse>
+    public async execute (destination: TransactionAccount, quanty: number) : Promise<APIResponse<Transaction[]>>
     {
         try 
         {
-            console.log(destination);
+            //console.log(destination);
             const destinationAcc = await SelectAccountService.execute(destination);
 
             const q = Number(quanty);
+            if(q <= 0) throw new Error(`400: Value need to be greather than 0`);
+
             const totalTax = q * (this.tax);
 
             const newDestAcc = await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+(q - totalTax)});
@@ -34,11 +36,22 @@ class CreateDepositService
                 value:-totalTax
             };
 
-            await TransactionTable.insert(depositTransaction);
+            const dep = await TransactionTable.insert(depositTransaction) as any[];
             await TransactionTable.insert(taxTransaction);
+            console.log(dep);
 
             return {
-                data: [depositTransaction, taxTransaction],
+                data: {
+                    id:depositTransaction.id,
+                    value:depositTransaction.value,
+                    type:depositTransaction.type,
+                    agency:destination.agency,
+                    agency_identifier:destination.agency_identifier,
+                    account:destination.account,
+                    account_identifier:destination.account_identifier,
+                    document:destination.cpf,
+                    date:new Date().toISOString()
+                },
                 messages: []
             } as APIResponse;
         }

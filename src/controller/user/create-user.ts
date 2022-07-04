@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CreateUserService } from "../../services";
-import { ResponseWriter } from "../../utils/response-writer";
+import { ResponseWriter } from "../../utils";
 
 class CreateUser
 {

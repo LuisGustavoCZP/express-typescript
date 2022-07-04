@@ -2,20 +2,27 @@ import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
 import { APIResponse, Fee, Transaction, TransactionAccount, TransactionType } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
-import { SelectAccountService } from "../account";
+import { PassAccountService, SelectAccountService } from "../account";
 
 class CreateTransferenceService 
 {
     private tax = 1.00;
 
-    public async execute (origin: TransactionAccount, destination: TransactionAccount, quanty: number) : Promise<APIResponse>
+    public async execute (origin: TransactionAccount, password: string, destination: TransactionAccount, quanty: number) : Promise<APIResponse<Transaction[]>>
     {
         try 
         {
             const originAcc = await SelectAccountService.execute(origin);
+
+            await PassAccountService.execute(originAcc.data, password);
+
             const destinationAcc = await SelectAccountService.execute(destination);
 
+            if(originAcc.data.id == destinationAcc.data.id) throw new Error(`400: Origin and Destination are the same`);
+
             const q = Number(quanty);
+            if(q <= 0) throw new Error(`400: Value need to be greather than 0`);
+
             const total = q + this.tax;
             if(originAcc.data.balance < total)
             {
@@ -53,7 +60,26 @@ class CreateTransferenceService
             await TransactionTable.insert(destTransaction);
 
             return {
-                data: [taxTransaction, originTransaction, destTransaction],
+                data: {
+                    id:originTransaction.id,
+                    value:originTransaction.value,
+                    type:originTransaction.type,
+                    origin:{
+                        agency:origin.agency,
+                        agency_identifier:origin.agency_identifier,
+                        account:origin.account,
+                        account_identifier:origin.account_identifier,
+                        document:origin.cpf
+                    },
+                    destination:{
+                        agency:destination.agency,
+                        agency_identifier:destination.agency_identifier,
+                        account:destination.account,
+                        account_identifier:destination.account_identifier,
+                        document:destination.cpf
+                    },
+                    date:new Date().toISOString()
+                },
                 messages: []
             } as APIResponse;
         }

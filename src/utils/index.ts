@@ -1,2 +1,4 @@
-export { ResponseWriter } from "./response-writer";
-export { ExceptionTreatment } from "./exception-treatment";
+import ResponseWriter from "./response-writer";
+import ExceptionTreatment from "./exception-treatment";
+import BCrypt from "./bcrypt";
+export {ResponseWriter, ExceptionTreatment, BCrypt};

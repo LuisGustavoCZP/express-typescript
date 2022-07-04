@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ResponseWriter } from "../../utils/response-writer";
+import { ResponseWriter } from "../../utils";
 import { CreateAccountService } from "../../services";
 
 class CreateAccount
@@ -8,7 +8,9 @@ class CreateAccount
     {
         try 
         {
-            const response = await CreateAccountService.execute(req.body);
+            const password = req.body["password"];
+            delete req.body["password"];
+            const response = await CreateAccountService.execute(req.body, password);
             new ResponseWriter().success(res, 201, response)
         }
         catch(e)

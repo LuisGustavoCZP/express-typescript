@@ -8,7 +8,7 @@ class CreateUserService
 {
     private dataValidator = UserDataValidator;
 
-    public async execute (user: User): Promise<APIResponse>
+    public async execute (user: User): Promise<APIResponse<User>>
     {
         try 
         {

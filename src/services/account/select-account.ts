@@ -7,7 +7,7 @@ class SelectAccountService
 {
     private dataValidator = AccountDataValidator;
 
-    public async execute (account : TransactionAccount) : Promise<APIResponse>
+    public async execute (account : TransactionAccount) : Promise<APIResponse<Account>>
     {
         try 
         {

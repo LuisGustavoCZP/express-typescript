@@ -1,17 +1,24 @@
 import { v4 } from "uuid";
-import { ExceptionTreatment } from "../../utils";
+import { ExceptionTreatment, BCrypt } from "../../utils";
 import { Account, APIResponse, User } from "../../models";
 import { CreateUserService } from "../user";
 import { AccountsTable } from "../../clients/postgres";
+import PasswordValidator from "../../validators/strings/password";
 
 class CreateAccountService 
 {
-    public async execute (user: User) : Promise<APIResponse>
+    public async execute (user: User, password: string) : Promise<APIResponse<Account>>
     {
         try 
         {
             const resp = await CreateUserService.execute(user);
-            //console.log(resp)
+
+            const validPassword = new PasswordValidator(password);
+            if(validPassword.errors)
+            {
+                throw new Error(`400: ${validPassword.errors}`)
+            }
+            const pw = await BCrypt.encrypt(validPassword.data);
 
             const ac = await AccountsTable.nextAccount();
             const ag = await AccountsTable.nextAgency();
@@ -23,15 +30,21 @@ class CreateAccountService
                 agency_identifier: ag.slice(-1),
                 account: ac.slice(0, -1),
                 account_identifier: ac.slice(-1),
+                password: pw,
                 balance: 0
-            };
+            } as Account;
 
-            const insertedAcc = await AccountsTable.insert(account as Account);
+            const insertedAcc = await AccountsTable.insert(account);
 
             if (insertedAcc)
             {
                 return {
-                    data: account,
+                    data: {
+                        agency:account.agency,
+                        agency_identifier:account.agency_identifier,
+                        account:account.account,
+                        account_identifier:account.account_identifier
+                    },
                     messages: []
                 } as APIResponse;
             }
@@ -43,7 +56,7 @@ class CreateAccountService
         }
         catch (error)
         {
-            console.log("User error", error);
+            //console.log("User error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

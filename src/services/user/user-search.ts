@@ -7,7 +7,7 @@ class UserSearchService
 {
     private dataValidator = CPFValidator;
 
-    public async execute (user: User): Promise<APIResponse>
+    public async execute (user: User): Promise<APIResponse<User>>
     {
         try 
         {

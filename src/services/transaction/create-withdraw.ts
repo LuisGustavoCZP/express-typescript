@@ -2,19 +2,23 @@ import { v4 } from "uuid";
 import { ExceptionTreatment } from "../../utils";
 import { APIResponse, Transaction, Fee, TransactionAccount, TransactionType } from "../../models";
 import { AccountsTable, TransactionTable } from "../../clients/postgres";
-import { SelectAccountService } from "../account";
+import { PassAccountService, SelectAccountService } from "../account";
 
 class CreateWithdrawService 
 {
     private tax = 4;
 
-    public async execute (origin: TransactionAccount, quanty: number) : Promise<APIResponse>
+    public async execute (origin: TransactionAccount, password: string, quanty: number) : Promise<APIResponse<Transaction[]>>
     {
         try 
         {
             const originAcc = await SelectAccountService.execute(origin);
 
+            await PassAccountService.execute(originAcc.data, password);
+
             const q = Number(quanty);
+            if(q <= 0) throw new Error(`400: Value need to be greather than 0`);
+            
             const total = q + (this.tax);
             if(originAcc.data.balance < total)
             {
@@ -41,7 +45,17 @@ class CreateWithdrawService
             await TransactionTable.insert(taxTransaction);
 
             return {
-                data: [taxTransaction, withdrawTransaction],
+                data: {
+                    id:withdrawTransaction.id,
+                    value:withdrawTransaction.value,
+                    type:withdrawTransaction.type,
+                    agency:origin.agency,
+                    agency_identifier:origin.agency_identifier,
+                    account:origin.account,
+                    account_identifier:origin.account_identifier,
+                    document:origin.cpf,
+                    date:new Date().toISOString()
+                },
                 messages: []
             } as APIResponse;
         }

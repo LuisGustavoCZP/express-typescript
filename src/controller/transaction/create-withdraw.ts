@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ResponseWriter } from "../../utils/response-writer";
+import { ResponseWriter } from "../../utils";
 import { CreateWithdrawService } from "../../services";
 
 class CreateWithdraw
@@ -8,9 +8,9 @@ class CreateWithdraw
     {
         try 
         {
-            const {origin, quanty} = req.body;
+            const {origin, password, quanty} = req.body;
             //console.log("Passou por aqui!");
-            const response = await CreateWithdrawService.execute(origin, quanty);
+            const response = await CreateWithdrawService.execute(origin, password, quanty);
             new ResponseWriter().success(res, 202, response)
         }
         catch(e)

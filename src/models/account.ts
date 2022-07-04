@@ -5,6 +5,7 @@ interface Account {
     agency_identifier: string
     account: string
     account_identifier: string
+    password: string,
     balance: number
 }
 
