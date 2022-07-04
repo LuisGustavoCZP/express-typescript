@@ -10,7 +10,7 @@ class CreateDeposit
         {
             const {destination, quanty} = req.body;
             //console.log("Passou por aqui!");
-            console.log(destination);
+            //console.log(destination);
             const response = await CreateDepositService.execute(destination, quanty);
             new ResponseWriter().success(res, 202, response)
         }

@@ -36,9 +36,9 @@ class CreateDepositService
                 value:-totalTax
             };
 
-            const dep = await TransactionTable.insert(depositTransaction) as any[];
+            await TransactionTable.insert(depositTransaction);
             await TransactionTable.insert(taxTransaction);
-            console.log(dep);
+            //console.log(dep);
 
             return {
                 data: {

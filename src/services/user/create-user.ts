@@ -47,6 +47,7 @@ class CreateUserService
         }
         catch (error)
         {
+            //console.log("User error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

@@ -27,7 +27,7 @@ class PassAccountService
         }
         catch (error)
         {
-            //console.log("User error", error);
+            //console.log("Password error", error);
             throw new ExceptionTreatment(
                 error as Error,
                 500,

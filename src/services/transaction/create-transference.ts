@@ -29,7 +29,7 @@ class CreateTransferenceService
                 throw new Error(`412: account has insuficient founds`);
             }
 
-            console.log("Transação de", originAcc.data.id, destinationAcc.data.id, originAcc.data.balance);
+            //console.log("Transação de", originAcc.data.id, destinationAcc.data.id, originAcc.data.balance);
 
             const newOriginAcc = await AccountsTable.update(originAcc.data.id, {balance:originAcc.data.balance-total});
             await AccountsTable.update(destinationAcc.data.id, {balance:destinationAcc.data.balance+q});
